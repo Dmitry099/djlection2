@@ -19,7 +19,7 @@ def read_csv():
 
 def get_url_with_param(page):
     param = {'page': page}
-    url = reverse(bus_stations)
+    url = reverse('bus_stations')
     encode_param = urlencode(param)
     bus_url = '?'.join((url, encode_param))
     return bus_url
