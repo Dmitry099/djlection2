@@ -43,10 +43,19 @@ def file_list(request, date=None):
 
     files = create_path()
     file_info_list = create_file_list(files)
+    files_to_view = []
     if date:
         date = date.date()
+        for file in file_info_list:
+            file_create_time = file['ctime'].date()
+            file_modify_time = file['mtime'].date()
+            if file_create_time == date or file_modify_time == date:
+                files_to_view.append(file)
+    else:
+        files_to_view = file_info_list
+
     context = {
-        'files': file_info_list,
+        'files': files_to_view,
         'date': date
     }
 

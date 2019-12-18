@@ -29,9 +29,16 @@ def landing(request):
 
 
 def stats(request):
-    test_conversion = counter_click['test'] / counter_show['test']
-    original_conversion = counter_click['original'] / counter_show['original']
-    return render_to_response('stats.html', context={
-        'test_conversion': test_conversion,
-        'original_conversion': original_conversion,
-    })
+    try:
+        test_conversion = counter_click['test'] / counter_show['test']
+    except ZeroDivisionError:
+        test_conversion = 'переходы со страницы отсутствуют'
+    try:
+        original_conversion = counter_click['original'] / counter_show['original']
+    except ZeroDivisionError:
+        original_conversion = 'переходы со страницы отсутствуют'
+    finally:
+        return render_to_response('stats.html', context={
+            'test_conversion': test_conversion,
+            'original_conversion': original_conversion,
+        })
